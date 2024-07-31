@@ -3,9 +3,6 @@ import pandas as pd
 import plotly.graph_objs as go
 import os
 
-st.set_page_config(
-        page_title = "ACADIA")
-
 # File path for saving data
 DATA_FILE = 'hike_data.csv'
 
@@ -59,7 +56,9 @@ def calculate_total_miles():
     return sum(hike['Miles'] for hike in st.session_state['data'] if hike.get('Type') == 'Hike')
 
 # Set layout to wide
-st.set_page_config(layout="wide")
+st.set_page_config(
+        page_title = "ACADIA", 
+        layout="wide")
 
 # Streamlit app layout
 st.markdown(
