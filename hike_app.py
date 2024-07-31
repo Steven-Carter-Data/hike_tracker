@@ -3,6 +3,9 @@ import pandas as pd
 import plotly.graph_objs as go
 import os
 
+st.set_page_config(
+        page_title = "ACADIA")
+
 # File path for saving data
 DATA_FILE = 'hike_data.csv'
 
