@@ -137,6 +137,7 @@ st.plotly_chart(gauge)
 
 # Motivation Board
 st.header("Motivation Board")
+st.subheader("Family! Please add comments of encouragment for these incredible kids! 50 miles is the goal!")
 
 # Input form for motivation message
 with st.form("motivation_form"):
