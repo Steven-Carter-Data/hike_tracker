@@ -79,7 +79,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-st.title("Carter Family: Acadia Miles Tracker 🥾")
+st.title("Carter Family Acadia Miles Tracker 🥾")
 
 # Display image
 st.image("acadia_1.jpg", caption="Acadia National Park")
@@ -95,15 +95,16 @@ with st.form("hike_form"):
         add_hike(date, miles, name)
         st.success("Hike added!")
 
-# Remove hike form
-if st.session_state['data']:
-    hikes_list = [f"{hike['Date']}, {hike['Name']}" for hike in st.session_state['data'] if hike.get('Type') == 'Hike']
-    hike_to_remove = st.selectbox("Select a hike to remove", hikes_list)
-    remove_submitted = st.button("Remove Hike")
-    
-    if remove_submitted and hike_to_remove:
-        remove_hike(hike_to_remove)
-        st.success("Hike removed!")
+# Expander for removing hike
+with st.expander("Select a hike to remove"):
+    if st.session_state['data']:
+        hikes_list = [f"{hike['Date']}, {hike['Name']}" for hike in st.session_state['data'] if hike.get('Type') == 'Hike']
+        hike_to_remove = st.selectbox("Select a hike to remove", hikes_list)
+        remove_submitted = st.button("Remove Hike")
+        
+        if remove_submitted and hike_to_remove:
+            remove_hike(hike_to_remove)
+            st.success("Hike removed!")
 
 # Display hike data table
 if st.session_state['data']:
@@ -152,15 +153,16 @@ with st.form("motivation_form"):
         add_motivation(name, message)
         st.success("Motivational message added!")
 
-# Remove motivation form
-if st.session_state['data']:
-    motivation_list = [f"{item.get('Name', '')}, {item.get('Message', '')}" for item in st.session_state['data'] if item.get('Type') == 'Motivation']
-    motivation_to_remove = st.selectbox("Select a message to remove", motivation_list)
-    remove_submitted = st.button("Remove Message")
-    
-    if remove_submitted and motivation_to_remove:
-        remove_motivation(motivation_to_remove)
-        st.success("Motivational message removed!")
+# Expander for removing motivation message
+with st.expander("Select a message to remove"):
+    if st.session_state['data']:
+        motivation_list = [f"{item.get('Name', '')}, {item.get('Message', '')}" for item in st.session_state['data'] if item.get('Type') == 'Motivation']
+        motivation_to_remove = st.selectbox("Select a message to remove", motivation_list)
+        remove_submitted = st.button("Remove Message")
+        
+        if remove_submitted and motivation_to_remove:
+            remove_motivation(motivation_to_remove)
+            st.success("Motivational message removed!")
 
 # Display motivation messages
 if st.session_state['data']:
