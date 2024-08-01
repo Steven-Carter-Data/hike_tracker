@@ -79,7 +79,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-st.title("Carter Family Acadia Miles Tracker 🥾")
+st.title("Carter Family: Acadia Miles Tracker 🥾")
 
 # Display image
 st.image("acadia_1.jpg", caption="Acadia National Park")
