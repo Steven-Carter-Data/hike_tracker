@@ -46,8 +46,6 @@ def add_motivation(name, message):
 
 # Function to remove motivation message
 def remove_motivation(motivation_to_remove):
-    # Adding a print statement to debug the issue
-    print(f"Attempting to remove: {motivation_to_remove}")
     st.session_state['data'] = [item for item in st.session_state['data'] if item.get('Type') != 'Motivation' or f"{item.get('Name', '')}, {item.get('Message', '')}" != motivation_to_remove]
     save_data(st.session_state['data'])
 
@@ -56,9 +54,7 @@ def calculate_total_miles():
     return sum(hike['Miles'] for hike in st.session_state['data'] if hike.get('Type') == 'Hike')
 
 # Set layout to wide
-st.set_page_config(
-        page_title = "ACADIA", 
-        layout="wide")
+st.set_page_config(title="ACADIA", layout="wide")
 
 # Streamlit app layout
 st.markdown(
@@ -105,10 +101,12 @@ if st.session_state['data']:
         remove_hike(hike_to_remove)
         st.success("Hike removed!")
 
-# Display data table
+# Display hike data table
 if st.session_state['data']:
-    df = pd.DataFrame([item for item in st.session_state['data'] if item.get('Type') == 'Hike'])
-    st.table(df)
+    hike_data = [item for item in st.session_state['data'] if item.get('Type') == 'Hike']
+    if hike_data:
+        df_hike = pd.DataFrame(hike_data)
+        st.table(df_hike[['Date', 'Miles', 'Name']])
 
 # Calculate total miles and update gauge
 total_miles = calculate_total_miles()
@@ -139,7 +137,6 @@ st.plotly_chart(gauge)
 
 # Motivation Board
 st.header("Motivation Board")
-st.subheader("Family! Please add comments of encouragment for these incredible kids! 50 miles is the goal!")
 
 # Input form for motivation message
 with st.form("motivation_form"):
@@ -163,6 +160,7 @@ if st.session_state['data']:
 
 # Display motivation messages
 if st.session_state['data']:
-    motivation_df = pd.DataFrame([item for item in st.session_state['data'] if item.get('Type') == 'Motivation'])
-    if not motivation_df.empty:
-        st.table(motivation_df)
+    motivation_data = [item for item in st.session_state['data'] if item.get('Type') == 'Motivation']
+    if motivation_data:
+        df_motivation = pd.DataFrame(motivation_data)
+        st.table(df_motivation[['Name', 'Message']])
