@@ -142,6 +142,7 @@ st.plotly_chart(gauge)
 
 # Motivation Board
 st.header("Motivation Board")
+st.write("Family! Our goal is to conquer 50 miles together before we leave Acadia National Park. Let’s spread some love and encouragement to motivate Killian, Lucy, and Vann as they blaze the trails! Love you all!")
 
 # Input form for motivation message
 with st.form("motivation_form"):
