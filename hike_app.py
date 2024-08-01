@@ -25,6 +25,10 @@ def ensure_type_key(data):
             item['Type'] = 'Hike'
     return data
 
+# Filter out rows with NA or empty values in the Name or Message columns
+def filter_incomplete_rows(data):
+    return [item for item in data if item.get('Type') == 'Motivation' and pd.notna(item.get('Name')) and pd.notna(item.get('Message')) and item.get('Name') != '' and item.get('Message') != '']
+
 # Initialize session state for storing data
 if 'data' not in st.session_state:
     st.session_state['data'] = ensure_type_key(load_data())
@@ -52,10 +56,6 @@ def remove_motivation(motivation_to_remove):
 # Function to calculate total miles
 def calculate_total_miles():
     return sum(hike['Miles'] for hike in st.session_state['data'] if hike.get('Type') == 'Hike')
-    
-# Function to filter out messages with 'NA'
-def filter_na_messages(data):
-    return [item for item in data if item.get('Message') != 'NA']
 
 # Set layout to wide
 st.set_page_config(layout="wide")
@@ -164,8 +164,7 @@ if st.session_state['data']:
 
 # Display motivation messages
 if st.session_state['data']:
-    motivation_data = [item for item in st.session_state['data'] if item.get('Type') == 'Motivation']
-    motivation_data = filter_na_messages(motivation_data)
+    motivation_data = filter_incomplete_rows(st.session_state['data'])
     if motivation_data:
         df_motivation = pd.DataFrame(motivation_data)
         st.table(df_motivation[['Name', 'Message']])
