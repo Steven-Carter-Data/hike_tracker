@@ -52,6 +52,10 @@ def remove_motivation(motivation_to_remove):
 # Function to calculate total miles
 def calculate_total_miles():
     return sum(hike['Miles'] for hike in st.session_state['data'] if hike.get('Type') == 'Hike')
+    
+# Function to filter out messages with 'NA'
+def filter_na_messages(data):
+    return [item for item in data if item.get('Message') != 'NA']
 
 # Set layout to wide
 st.set_page_config(layout="wide")
@@ -161,6 +165,7 @@ if st.session_state['data']:
 # Display motivation messages
 if st.session_state['data']:
     motivation_data = [item for item in st.session_state['data'] if item.get('Type') == 'Motivation']
+    motivation_data = filter_na_messages(motivation_data)
     if motivation_data:
         df_motivation = pd.DataFrame(motivation_data)
         st.table(df_motivation[['Name', 'Message']])
