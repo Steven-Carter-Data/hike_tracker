@@ -54,7 +54,7 @@ def calculate_total_miles():
     return sum(hike['Miles'] for hike in st.session_state['data'] if hike.get('Type') == 'Hike')
 
 # Set layout to wide
-st.set_page_config(title="ACADIA", layout="wide")
+st.set_page_config(layout="wide")
 
 # Streamlit app layout
 st.markdown(
