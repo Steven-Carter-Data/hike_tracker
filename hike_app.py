@@ -163,4 +163,13 @@ with st.expander("Select a message to remove"):
         motivation_to_remove = st.selectbox("Select a message to remove", motivation_list)
         remove_submitted = st.button("Remove Message")
         
-        if remove
+        if remove_submitted and motivation_to_remove:
+            remove_motivation(motivation_to_remove)
+            st.success("Motivational message removed!")
+
+# Display motivation messages
+if st.session_state['data']:
+    motivation_data = filter_incomplete_rows(st.session_state['data'])
+    if motivation_data:
+        df_motivation = pd.DataFrame(motivation_data)
+        st.table(df_motivation[['Name', 'Message']])
