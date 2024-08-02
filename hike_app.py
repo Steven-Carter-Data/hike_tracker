@@ -79,7 +79,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-st.title("Carter Family: Acadia Miles Tracker 🥾")
+st.title("Carter Family Acadia Miles Tracker 🥾")
 
 # Display image
 st.image("acadia_1.jpg", caption="Acadia National Park")
@@ -94,6 +94,7 @@ with st.form("hike_form"):
     if submitted:
         add_hike(date, miles, name)
         st.success("Hike added!")
+        save_data(st.session_state['data'])  # Ensure data is saved after adding a hike
 
 # Expander for removing hike
 with st.expander("Select a hike to remove"):
@@ -153,6 +154,7 @@ with st.form("motivation_form"):
     if submitted:
         add_motivation(name, message)
         st.success("Motivational message added!")
+        save_data(st.session_state['data'])  # Ensure data is saved after adding a message
 
 # Expander for removing motivation message
 with st.expander("Select a message to remove"):
@@ -161,13 +163,4 @@ with st.expander("Select a message to remove"):
         motivation_to_remove = st.selectbox("Select a message to remove", motivation_list)
         remove_submitted = st.button("Remove Message")
         
-        if remove_submitted and motivation_to_remove:
-            remove_motivation(motivation_to_remove)
-            st.success("Motivational message removed!")
-
-# Display motivation messages
-if st.session_state['data']:
-    motivation_data = filter_incomplete_rows(st.session_state['data'])
-    if motivation_data:
-        df_motivation = pd.DataFrame(motivation_data)
-        st.table(df_motivation[['Name', 'Message']])
+        if remove
